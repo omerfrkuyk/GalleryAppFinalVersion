@@ -65,7 +65,7 @@ namespace BLL.Services
 
         public ServiceBase Delete(int id)
         {
-            var entity = _db.PhotoTypes.Include(p => p.Photos).SingleOrDefault(p => p.Id == id);
+            var entity = _db.PhotoTypes.Include(p=>p.Photos).SingleOrDefault(p => p.Id == id);
             if (entity == null)
                 return Error("Photo Types cant be found!!!");
             if (entity.Photos.Any()) //count >0

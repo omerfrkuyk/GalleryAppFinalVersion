@@ -13,11 +13,15 @@ namespace BLL.DAL
         public int Id { get; set; }
 
         [Required]
+        [StringLength(60)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(60)]
         public string Surname { get; set; }
 
         public List<PhotoOwner> PhotoOwners { get; set; } = new List<PhotoOwner>();
+
 
     }
 }

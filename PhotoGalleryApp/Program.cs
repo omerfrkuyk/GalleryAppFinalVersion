@@ -1,5 +1,7 @@
 using BLL.DAL;
+using BLL.Models;
 using BLL.Services;
+using BLL.Services.Bases;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,11 @@ builder.Services.AddControllersWithViews();
 string connectionString = "server=(localdb)\\mssqllocaldb;database=PhotosAppDb;trusted_connection=true;";
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IPhotoTypesService, PhotoTypesService>();
+
+
+
+
+builder.Services.AddScoped<IService<Photo, PhotoModel>, PhotoService>();
 
 var app = builder.Build();
 

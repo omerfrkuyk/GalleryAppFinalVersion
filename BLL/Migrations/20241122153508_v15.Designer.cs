@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BLL.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20241119182101_v1")]
-    partial class v1
+    [Migration("20241122153508_v15")]
+    partial class v15
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -35,10 +35,13 @@ namespace BLL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.HasKey("Id");
 
@@ -56,34 +59,26 @@ namespace BLL.Migrations
                     b.Property<decimal?>("ApertureValue")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ISOValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IsoValue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PhotoDate")
+                    b.Property<DateTime?>("PhotoDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PhotoTypeID")
+                    b.Property<int?>("PhotoTypesID")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("ShutterSpeed")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("isTakenStudio")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhotoTypeID");
+                    b.HasIndex("PhotoTypesID");
 
                     b.ToTable("Photos");
                 });
@@ -111,7 +106,7 @@ namespace BLL.Migrations
                     b.ToTable("PhotoOwners");
                 });
 
-            modelBuilder.Entity("BLL.DAL.PhotoType", b =>
+            modelBuilder.Entity("BLL.DAL.PhotoTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,7 +115,9 @@ namespace BLL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
 
@@ -129,9 +126,9 @@ namespace BLL.Migrations
 
             modelBuilder.Entity("BLL.DAL.Photo", b =>
                 {
-                    b.HasOne("BLL.DAL.PhotoType", "PhotoTypes")
+                    b.HasOne("BLL.DAL.PhotoTypes", "PhotoTypes")
                         .WithMany("Photos")
-                        .HasForeignKey("PhotoTypeID");
+                        .HasForeignKey("PhotoTypesID");
 
                     b.Navigation("PhotoTypes");
                 });
@@ -165,7 +162,7 @@ namespace BLL.Migrations
                     b.Navigation("PhotoOwners");
                 });
 
-            modelBuilder.Entity("BLL.DAL.PhotoType", b =>
+            modelBuilder.Entity("BLL.DAL.PhotoTypes", b =>
                 {
                     b.Navigation("Photos");
                 });

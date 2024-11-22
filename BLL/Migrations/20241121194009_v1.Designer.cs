@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BLL.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20241119182525_v2")]
-    partial class v2
+    [Migration("20241121194009_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -62,6 +62,9 @@ namespace BLL.Migrations
                     b.Property<int?>("PhotoTypeID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PhotoTypesId")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("ShutterSpeed")
                         .HasColumnType("decimal(18,2)");
 
@@ -77,7 +80,7 @@ namespace BLL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhotoTypeID");
+                    b.HasIndex("PhotoTypesId");
 
                     b.ToTable("Photos");
                 });
@@ -105,7 +108,7 @@ namespace BLL.Migrations
                     b.ToTable("PhotoOwners");
                 });
 
-            modelBuilder.Entity("BLL.DAL.PhotoType", b =>
+            modelBuilder.Entity("BLL.DAL.PhotoTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,16 +126,16 @@ namespace BLL.Migrations
 
             modelBuilder.Entity("BLL.DAL.Photo", b =>
                 {
-                    b.HasOne("BLL.DAL.PhotoType", "PhotoTypes")
+                    b.HasOne("BLL.DAL.PhotoTypes", "PhotoTypes")
                         .WithMany("Photos")
-                        .HasForeignKey("PhotoTypeID");
+                        .HasForeignKey("PhotoTypesId");
 
                     b.Navigation("PhotoTypes");
                 });
 
             modelBuilder.Entity("BLL.DAL.PhotoOwner", b =>
                 {
-                    b.HasOne("BLL.DAL.Owner", "Owner")
+                    b.HasOne("BLL.DAL.Owner", null)
                         .WithMany("PhotoOwners")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -143,8 +146,6 @@ namespace BLL.Migrations
                         .HasForeignKey("PhotoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Owner");
 
                     b.Navigation("Photo");
                 });
@@ -159,7 +160,7 @@ namespace BLL.Migrations
                     b.Navigation("PhotoOwners");
                 });
 
-            modelBuilder.Entity("BLL.DAL.PhotoType", b =>
+            modelBuilder.Entity("BLL.DAL.PhotoTypes", b =>
                 {
                     b.Navigation("Photos");
                 });

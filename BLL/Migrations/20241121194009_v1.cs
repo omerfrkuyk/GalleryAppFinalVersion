@@ -50,15 +50,15 @@ namespace BLL.Migrations
                     PhotoDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ApertureValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ShutterSpeed = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    ISOValue = table.Column<int>(type: "int", nullable: false),
-                    PhotoTypeID = table.Column<int>(type: "int", nullable: true)
+                    PhotoTypeID = table.Column<int>(type: "int", nullable: true),
+                    PhotoTypesId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photos_PhotoTypes_PhotoTypeID",
-                        column: x => x.PhotoTypeID,
+                        name: "FK_Photos_PhotoTypes_PhotoTypesId",
+                        column: x => x.PhotoTypesId,
                         principalTable: "PhotoTypes",
                         principalColumn: "Id");
                 });
@@ -100,9 +100,9 @@ namespace BLL.Migrations
                 column: "PhotoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photos_PhotoTypeID",
+                name: "IX_Photos_PhotoTypesId",
                 table: "Photos",
-                column: "PhotoTypeID");
+                column: "PhotoTypesId");
         }
 
         /// <inheritdoc />

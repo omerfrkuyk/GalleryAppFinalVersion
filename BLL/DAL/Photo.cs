@@ -13,21 +13,22 @@ namespace BLL.DAL
 
         public int Id { get; set; }
 
-        [Required]
-        public string Type { get; set; }
-
+      
+     
         public bool isTakenStudio { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
 
-        public DateTime PhotoDate { get; set; }
+        public DateTime? PhotoDate { get; set; }
 
         public decimal? ApertureValue { get; set; }
 
         public decimal? ShutterSpeed { get; set; }
 
-
-        public int? PhotoTypeID { get; set; }
+        
+        public int? PhotoTypesID { get; set; }
 
 
         public  PhotoTypes PhotoTypes { get; set; } //Navigational Property
